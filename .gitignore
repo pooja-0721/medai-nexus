@@ -1,0 +1,45 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Environment & secrets
+.env
+.env.*
+
+# IDE
+.vscode/
+.DS_Store
+
+# Trained models
+models/*.pth
+models/*.pt
+models/*.h5
+models/*.onnx
+models/*.safetensors
+
+# Medical / dataset files
+data/*
+!data/README.md
+*.csv
+*.xlsx
+*.xls
+*.json
+*.dcm
+*.nii
+*.nii.gz
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tif
+*.tiff
+*.pdf
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
