@@ -41,6 +41,7 @@ def analyze_blood_report(
     for test_name, value in report.items():
 
         test_key = test_name.lower().strip()
+        test_key = TEST_ALIASES.get(test_key, test_key)
 
         if test_key not in REFERENCE_RANGES:
             results[test_key] = {
@@ -68,5 +69,17 @@ def analyze_blood_report(
             ],
             "status": status,
         }
-
+        
     return results
+TEST_ALIASES = {
+    "hb": "hemoglobin",
+    "haemoglobin": "hemoglobin",
+    "white blood cell count": "wbc",
+    "white blood cells": "wbc",
+    "wbc count": "wbc",
+    "plt": "platelets",
+    "platelet count": "platelets",
+    "blood sugar": "glucose",
+    "fbs": "glucose",
+    "fasting blood sugar": "glucose",
+}
