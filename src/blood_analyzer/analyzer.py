@@ -83,3 +83,15 @@ TEST_ALIASES = {
     "fbs": "glucose",
     "fasting blood sugar": "glucose",
 }
+def analyze_blood_report_text(text: str) -> dict[str, Any]:
+    """
+    Parse blood-report text and analyze the extracted values.
+
+    This is a research prototype and does not provide a medical diagnosis.
+    """
+
+    from .parser import parse_blood_report
+
+    extracted_values = parse_blood_report(text)
+
+    return analyze_blood_report(extracted_values)
