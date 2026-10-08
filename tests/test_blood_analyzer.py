@@ -3,6 +3,7 @@ from src.blood_analyzer.analyzer import (
     analyze_blood_report_text,
 )
 from src.blood_analyzer.parser import parse_blood_report
+from src.blood_analyzer.pdf_extractor import extract_text_from_pdf
 
 
 def test_standard_test_name():
@@ -112,4 +113,32 @@ def test_analyze_blood_report_text():
 
     assert result["hemoglobin"]["status"] == "within_reference_range"
     assert result["wbc"]["status"] == "within_reference_range"
-    assert result["glucose"]["status"] == "above_reference_range"    
+    assert result["glucose"]["status"] == "above_reference_range" 
+def test_pdf_file_not_found():
+    import pytest
+
+    with pytest.raises(FileNotFoundError):
+        extract_text_from_pdf("nonexistent_report.pdf")
+
+
+def test_pdf_invalid_extension():
+    import pytest
+
+    with pytest.raises(ValueError):
+        extract_text_from_pdf("report.txt")   
+
+def test_pdf_to_blood_analysis():
+    from src.blood_analyzer.pdf_extractor import extract_text_from_pdf
+    from src.blood_analyzer.parser import parse_blood_report
+    from src.blood_analyzer.analyzer import analyze_blood_report
+
+    text = extract_text_from_pdf("data/sample_blood_report.pdf")
+
+    extracted = parse_blood_report(text)
+
+    result = analyze_blood_report(extracted)
+
+    assert result["hemoglobin"]["status"] == "within_reference_range"
+    assert result["wbc"]["status"] == "within_reference_range"
+    assert result["platelets"]["status"] == "within_reference_range"
+    assert result["glucose"]["status"] == "above_reference_range"            
